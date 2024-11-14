@@ -1,0 +1,19 @@
+# YAML 1.2
+---
+cff-version: "1.0.4"
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: xxxx
+    given-names: xxxx
+    orcid: https://orcid.org/xxxx-xxxx-xxxx-xxxx
+title: "My Research Software"
+version: x.x.x
+identifiers:
+  - type: doi
+    value: xxxx/xxxx.1234
+date-released: xxxx-xx-xx
+repository-code: "https://github.com/XXXXX/XXXX"
+keywords:
+  - xxxx
+  - xxxx
+license: xxxx

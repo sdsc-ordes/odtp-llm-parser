@@ -1,0 +1,157 @@
+# Schema version for tracking updates to the schema format
+schema-version: "v0.5.0"
+
+# Component Information
+component-name: Component Name
+component-version: "vX.Y.Z"
+component-license: Component License
+component-type: ephemeral or interactive
+component-description: Description of the component's function
+component-authors:
+  - name: Author One
+    orcid: "https://orcid.org/0000-0001-2345-6789"
+  - name: Author Two
+    orcid: "https://orcid.org/0000-0002-3456-7890"
+component-repository:
+  url: "https://github.com/organization/component-repo"
+  doi: "https://doi.org/10.1234/component.doi"
+component-docker-image: "dockeruser/dockerimage:label"
+tags:
+  - tag1
+  - tag2
+
+# Tool Information
+tools:
+  - tool-name: Tool Name
+    tool-authors:
+      - name: Tool Author
+        orcid: "https://orcid.org/0000-0001-1234-5678"
+    tool-version: Tool Version
+    tool-repository:
+      url: "https://github.com/organization/tool-repo"
+      doi: "https://doi.org/10.1234/tool.doi"
+    tool-license: Tool License
+
+# Secrets (ENV variables)
+secrets:
+  - name: API_KEY
+    description: API key for authentication
+    type: str
+
+# Build Arguments (if any)
+build-args:
+  - name: MATLAB_LICENSE
+    description: License key for Matlab
+    secret: true # Mark as secret if sensitive
+
+# Exposed Ports
+ports:
+  - name: PORT_A
+    description: Main server port
+    port-value: 8080
+  - name: PORT_B
+    description: Auxiliary service port
+    port-value: 9090
+
+# Parameters for the Component
+parameters:
+  - name: PARAMETER_A
+    default-value: 10
+    datatype: int
+    description: Max retries allowed
+    parameter-bounds: 
+      - 0 # Minimum value
+      - 100 # Maximum value
+    options: null
+    allow-custom-value: false
+
+  - name: PARAMETER_B
+    default-value: OptionA
+    datatype: str
+    description: Select a mode
+    options: 
+      - OptionA
+      - OptionB
+      - OptionC # Limited choices for str type
+    allow-custom-value: false
+
+# Data Inputs
+data-inputs:
+  - name: INPUT_A
+    type: .txt
+    path: /path/to/input/SIMPLE_INPUT.txt
+    description: Single static input file
+    naming-convention: "SIMPLE_INPUT.txt"
+
+  - name: INPUT_B
+    type: TYPE_B
+    path: /path/to/input/folder_A
+    description: Folder containing dynamically named input files
+    naming-convention: "data_{PARAMETER_A}_{PARAMETER_B}_v{number}.ext"
+    dynamic-naming-based-on:
+      - PARAMETER_A
+      - PARAMETER_B
+    sequence:
+      start: 1
+      increment: 1
+
+  - name: INPUT_C
+    type: TYPE_C
+    path: /path/to/input/folder_B
+    description: Folder with structured input files
+    folder-structure:
+      required-files:
+        - file-pattern: "summary_{PARAMETER_C}_{date}.txt"
+        - file-pattern: "log_{PARAMETER_C}_{number}.json"
+      naming-convention: "parameter_and_numeric_based"
+      dynamic-naming-based-on:
+        - PARAMETER_C
+      date-format: "YYYYMMDD"
+      sequence:
+        start: 1
+        increment: 1
+
+# Data Outputs
+data-outputs:
+  - name: OUTPUT_A
+    type: .txt
+    path: /path/to/output/SIMPLE_OUTPUT.txt
+    description: Static output file
+    naming-convention: "SIMPLE_OUTPUT.txt"
+
+  - name: OUTPUT_B
+    type: TYPE_B
+    path: /path/to/output/folder_A
+    description: Folder for dynamic output files
+    naming-convention: "prefix_{PARAMETER_A}_{PARAMETER_B}_v{number}.ext"
+    dynamic-naming-based-on:
+      - PARAMETER_A
+      - PARAMETER_B
+    sequence:
+      start: 1
+      increment: 1
+
+  - name: OUTPUT_C
+    type: TYPE_C
+    path: /path/to/output/folder_B
+    description: Folder for structured output files
+    folder-structure:
+      required-files:
+        - file-pattern: "output_summary_{PARAMETER_C}_{date}.txt"
+        - file-pattern: "log_{PARAMETER_C}_{number}.json"
+      naming-convention: "parameter_and_numeric_based"
+      dynamic-naming-based-on:
+        - PARAMETER_C
+      date-format: "YYYYMMDD"
+      sequence:
+        start: 1
+        increment: 1
+
+# Validation Schemas (Future Development)
+schema-input: PATH_TO_INPUT_SCHEMA
+schema-output: PATH_TO_OUTPUT_SCHEMA
+
+# Device Requirements
+devices:
+  - type: gpu
+    required: true
