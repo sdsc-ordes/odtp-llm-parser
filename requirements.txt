@@ -1,1 +1,3 @@
-# Please list here all python dependencies of your tool
+openai==1.54.4
+requests==2.32.3
+gradio==5.5.0
